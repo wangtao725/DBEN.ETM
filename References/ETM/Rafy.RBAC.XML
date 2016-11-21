@@ -1,0 +1,2841 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Rafy.RBAC</name>
+    </assembly>
+    <members>
+        <member name="T:Rafy.RBAC.Cache.HierarchicalStructureDataCache">
+            <summary>
+            树型菜单数据缓存。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.Cache.HierarchicalStructureDataCache.SetCacheExpire">
+            <summary>
+            设置缓存过期。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.Cache.HierarchicalStructureDataCache._GetCacheItemPolicy(System.Double)">
+            <summary>
+            获取一个缓存策略实例。
+            </summary>
+            <param name="slidingExpiration">缓存时长。单位：小时</param>
+            <returns></returns>
+        </member>
+        <member name="P:Rafy.RBAC.Cache.HierarchicalStructureDataCache.UserList">
+            <summary>
+            获取用户集合的缓存项。
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.Cache.HierarchicalStructureDataCache.UserRoleList">
+            <summary>
+            获取用户角色集合的缓存项。
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.Cache.HierarchicalStructureDataCache.RoleOperationList">
+            <summary>
+            获取角色与按钮映射集合的缓存项。
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.Cache.HierarchicalStructureDataCache.ResourceOperationList">
+            <summary>
+            获取功能按钮集合的缓存项。
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.Cache.HierarchicalStructureDataCache.OrganizationList">
+            <summary>
+            获取组织集合的缓存项。
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.Cache.HierarchicalStructureDataCache.OrganizationUserList">
+            <summary>
+            获取组织与用户映射集合的缓存项。
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.Cache.HierarchicalStructureDataCache.ResourceList">
+            <summary>
+            获取功能模块集合的缓存项。
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.Controllers.Authentication.DataAuthenticationController">
+            <summary>
+            此方法用于认证用户的数据权限
+            </summary>
+        </member>
+        <member name="F:Rafy.RBAC.Controllers.Authentication.DataAuthenticationController._userRoleRepository">
+            <summary>
+            用户角色仓库
+            </summary>
+        </member>
+        <member name="F:Rafy.RBAC.Controllers.Authentication.DataAuthenticationController._roleOperationRepository">
+            <summary>
+            角色操作仓库
+            </summary>
+        </member>
+        <member name="F:Rafy.RBAC.Controllers.Authentication.DataAuthenticationController._operationRepository">
+            <summary>
+            资源操作仓库
+            </summary>
+        </member>
+        <member name="F:Rafy.RBAC.Controllers.Authentication.DataAuthenticationController._organizationRepository">
+            <summary>
+            组织仓库
+            </summary>
+        </member>
+        <member name="F:Rafy.RBAC.Controllers.Authentication.DataAuthenticationController._orgUserRepository">
+            <summary>
+            组织用户仓库
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.Controllers.Authentication.DataAuthenticationController.GetOwnerOrg(System.Int64)">
+            <summary>
+            获取自己组织的用户
+            </summary>
+            <param name="organizationId">组织ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.Controllers.Authentication.DataAuthenticationController.GetImmediateSuperior(System.Int64)">
+            <summary>
+            获取直接上级组织的用户
+            </summary>
+            <param name="organizationId">组织ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.Controllers.Authentication.DataAuthenticationController.GetOwnerAndImmediateSuperior(System.Int64)">
+            <summary>
+            获取自己和直接上级组织的用户
+            </summary>
+            <param name="organizationId">组织ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.Controllers.Authentication.DataAuthenticationController.GetUserByRole(System.Int64,System.Int64)">
+            <summary>
+            通过角色ID获取用户。
+            </summary>
+            <param name="roleId">角色ID</param>
+            <param name="currentUserId">申请人</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.Controllers.Authentication.DataAuthenticationController.AuthenticateUserDataOperation(Rafy.Accounts.User,Rafy.RBAC.Resource,Rafy.RBAC.Organization)">
+            <summary>
+            此方法认证用户在资源下的数据权限。
+            认证成功后，返回该用户，可以看到数据的创建人列表。
+            </summary>
+            <param name="user">需要认证的用户</param>
+            <param name="resource">需要认证的资源</param>
+            <param name="organization">需要认证的用户的当前组织。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.Controllers.Authentication.DataAuthenticationController.AuthenticateOrgDataOperation(Rafy.Accounts.User,Rafy.RBAC.Resource,Rafy.RBAC.Organization)">
+            <summary>
+            此方法认证用户在资源下的数据权限。
+            认证成功后，返回该用户可以看到数据的组织列表。
+            </summary>
+            <param name="resource">需要认证的资源。</param>
+            <param name="organization">需要认证的组织。</param>
+            <param name="user">需要认证的用户。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.Controllers.Authentication.DataAuthenticationController.GetUserListByOperation(System.Collections.Generic.List{Rafy.RBAC.ResourceOperation},Rafy.Accounts.User,Rafy.RBAC.Organization)">
+            <summary>
+            通过数据过滤规则获取用户。
+            </summary>
+            <param name="rol">数据过滤规则操作。</param>
+            <param name="organization">待过滤的组织数据。</param>
+            <param name="user">待过滤的用户数据。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.Controllers.Authentication.DataAuthenticationController.GetUserListByOwnCompanyRule(Rafy.RBAC.Organization)">
+            <summary>
+            获取自己组织的用户。
+            </summary>
+            <param name="organization">需要获取用户的组织。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.Controllers.Authentication.DataAuthenticationController.GetUserListByLowerRule(Rafy.RBAC.Organization)">
+            <summary>
+            获取自己及下级组织的用户。
+            </summary>
+            <param name="organization">需要获取用户的组织。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.Controllers.Authentication.DataAuthenticationController.GetOwnerOperation(Rafy.Accounts.User,Rafy.RBAC.Resource)">
+            <summary>
+            此方法用于获取用户在某个资源下的数据操作。
+            </summary>
+            <param name="user">用户数据。</param>
+            <param name="resource">资源数据。</param>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.OrganizationUser">
+            <summary>
+            组织用户
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.OrganizationUser.User">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.OrganizationUserList">
+            <summary>
+            组织用户 列表类。
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.OrganizationUserList.Item(System.Int32)">
+            <summary>
+            获取或设置指定位置的实体。
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserList.GetEnumerator">
+            <summary>
+            获取本实体列表的迭代器。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserList.Concrete">
+            <summary>
+            返回子实体的强类型迭代接口，方便使用 Linq To Object 操作。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserList.Add(Rafy.RBAC.OrganizationUser)">
+            <summary>
+            添加指定的实体到集合中。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserList.Contains(Rafy.RBAC.OrganizationUser)">
+            <summary>
+            判断本集合是否包含指定的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserList.IndexOf(Rafy.RBAC.OrganizationUser)">
+            <summary>
+            判断指定的实体在本集合中的索引号。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserList.Insert(System.Int32,Rafy.RBAC.OrganizationUser)">
+            <summary>
+            在指定的位置插入实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserList.Remove(Rafy.RBAC.OrganizationUser)">
+            <summary>
+            在集合中删除指定的实体。返回是否成功删除。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.OrganizationUserRepository">
+            <summary>
+            组织用户 仓库类。
+            负责 组织用户 类的查询、保存。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserRepository.#ctor">
+            <summary>
+            单例模式，外界不可以直接构造本对象。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserRepository.GetByOrganizationId(System.Int64)">
+            <summary>
+            此方法通过组织ID获取组织用户数据。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserRepository.GetByOrganizationId(System.Int64[])">
+            <summary>
+            此方法通过多个组织的ID获取组织用户的数据。
+            </summary>
+            <param name="ids">存储了组织ID的数组。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserRepository.GetByUserId(System.Int64)">
+            <summary>
+            此方法通过用户ID获取组织用户的数据。
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserRepository.CreateLinqQuery">
+            <summary>
+            创建一个实体类的 Linq 查询器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserRepository.New">
+            <summary>
+            创建一个新的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserRepository.NewList">
+            <summary>
+            创建一个全新的列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserRepository.CacheById(System.Object)">
+            <summary>
+            优先使用缓存中的数据来通过 Id 获取指定的实体对象
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetById 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserRepository.CacheAll">
+            <summary>
+            优先使用缓存中的数据来查询所有的实体类
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetAll 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserRepository.GetById(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过Id在数据层中查询指定的对象
+            </summary>
+            <param name="id"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserRepository.GetFirst(Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查询第一个实体类
+            </summary>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserRepository.GetAll(Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            分页查询所有的实体类
+            </summary>
+            <param name="paging"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserRepository.GetByIdList(System.Object[],Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            获取指定 id 集合的实体列表。
+            </summary>
+            <param name="idList"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserRepository.GetByParentIdList(System.Object[],Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过组合父对象的 Id 列表，查找所有的组合子对象的集合。
+            </summary>
+            <param name="parentIdList"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserRepository.GetByParentId(System.Object,Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过父对象 Id 分页查询子对象的集合。
+            </summary>
+            <param name="parentId"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserRepository.GetBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询实体列表。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserRepository.GetFirstBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询单一实体。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserRepository.GetByTreeParentIndex(System.String,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            递归查找所有树型子
+            </summary>
+            <param name="treeIndex"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserRepository.GetByTreePId(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查找指定树节点的直接子节点。
+            </summary>
+            <param name="treePId">需要查找的树节点的Id.</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.OrganizationUserConfig">
+            <summary>
+            组织用户 配置类。
+            负责 组织用户 类的实体元数据的配置。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationUserConfig.ConfigMeta">
+            <summary>
+            配置实体的元数据
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.OrgPosition">
+            <summary>
+            岗位模型
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.OrgPosition.Name">
+            <summary>
+            岗位名称
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.OrgPosition.Code">
+            <summary>
+            岗位编码
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.OrgPosition.Description">
+            <summary>
+            岗位描述
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.OrgPositionList">
+            <summary>
+            岗位模型 列表类。
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.OrgPositionList.Item(System.Int32)">
+            <summary>
+            获取或设置指定位置的实体。
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionList.GetEnumerator">
+            <summary>
+            获取本实体列表的迭代器。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionList.Concrete">
+            <summary>
+            返回子实体的强类型迭代接口，方便使用 Linq To Object 操作。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionList.Add(Rafy.RBAC.OrgPosition)">
+            <summary>
+            添加指定的实体到集合中。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionList.Contains(Rafy.RBAC.OrgPosition)">
+            <summary>
+            判断本集合是否包含指定的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionList.IndexOf(Rafy.RBAC.OrgPosition)">
+            <summary>
+            判断指定的实体在本集合中的索引号。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionList.Insert(System.Int32,Rafy.RBAC.OrgPosition)">
+            <summary>
+            在指定的位置插入实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionList.Remove(Rafy.RBAC.OrgPosition)">
+            <summary>
+            在集合中删除指定的实体。返回是否成功删除。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.OrgPositionRepository">
+            <summary>
+            岗位模型 仓库类。
+            负责 岗位模型 类的查询、保存。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRepository.#ctor">
+            <summary>
+            单例模式，外界不可以直接构造本对象。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRepository.CreateLinqQuery">
+            <summary>
+            创建一个实体类的 Linq 查询器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRepository.New">
+            <summary>
+            创建一个新的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRepository.NewList">
+            <summary>
+            创建一个全新的列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRepository.CacheById(System.Object)">
+            <summary>
+            优先使用缓存中的数据来通过 Id 获取指定的实体对象
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetById 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRepository.CacheAll">
+            <summary>
+            优先使用缓存中的数据来查询所有的实体类
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetAll 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRepository.GetById(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过Id在数据层中查询指定的对象
+            </summary>
+            <param name="id"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRepository.GetFirst(Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查询第一个实体类
+            </summary>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRepository.GetAll(Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            分页查询所有的实体类
+            </summary>
+            <param name="paging"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRepository.GetByIdList(System.Object[],Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            获取指定 id 集合的实体列表。
+            </summary>
+            <param name="idList"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRepository.GetByParentIdList(System.Object[],Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过组合父对象的 Id 列表，查找所有的组合子对象的集合。
+            </summary>
+            <param name="parentIdList"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRepository.GetByParentId(System.Object,Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过父对象 Id 分页查询子对象的集合。
+            </summary>
+            <param name="parentId"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRepository.GetBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询实体列表。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRepository.GetFirstBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询单一实体。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRepository.GetByTreeParentIndex(System.String,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            递归查找所有树型子
+            </summary>
+            <param name="treeIndex"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRepository.GetByTreePId(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查找指定树节点的直接子节点。
+            </summary>
+            <param name="treePId">需要查找的树节点的Id.</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.OrgPositionConfig">
+            <summary>
+            岗位模型 配置类。
+            负责 岗位模型 类的实体元数据的配置。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionConfig.ConfigMeta">
+            <summary>
+            配置实体的元数据
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.OrgPositionRole">
+            <summary>
+            岗位角色模型
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.OrgPositionRole.Role">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.OrgPositionRoleList">
+            <summary>
+            岗位角色模型 列表类。
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.OrgPositionRoleList.Item(System.Int32)">
+            <summary>
+            获取或设置指定位置的实体。
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleList.GetEnumerator">
+            <summary>
+            获取本实体列表的迭代器。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleList.Concrete">
+            <summary>
+            返回子实体的强类型迭代接口，方便使用 Linq To Object 操作。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleList.Add(Rafy.RBAC.OrgPositionRole)">
+            <summary>
+            添加指定的实体到集合中。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleList.Contains(Rafy.RBAC.OrgPositionRole)">
+            <summary>
+            判断本集合是否包含指定的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleList.IndexOf(Rafy.RBAC.OrgPositionRole)">
+            <summary>
+            判断指定的实体在本集合中的索引号。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleList.Insert(System.Int32,Rafy.RBAC.OrgPositionRole)">
+            <summary>
+            在指定的位置插入实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleList.Remove(Rafy.RBAC.OrgPositionRole)">
+            <summary>
+            在集合中删除指定的实体。返回是否成功删除。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.OrgPositionRoleRepository">
+            <summary>
+            岗位角色模型 仓库类。
+            负责 岗位角色模型 类的查询、保存。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleRepository.#ctor">
+            <summary>
+            单例模式，外界不可以直接构造本对象。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleRepository.CreateLinqQuery">
+            <summary>
+            创建一个实体类的 Linq 查询器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleRepository.New">
+            <summary>
+            创建一个新的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleRepository.NewList">
+            <summary>
+            创建一个全新的列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleRepository.CacheById(System.Object)">
+            <summary>
+            优先使用缓存中的数据来通过 Id 获取指定的实体对象
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetById 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleRepository.CacheAll">
+            <summary>
+            优先使用缓存中的数据来查询所有的实体类
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetAll 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleRepository.GetById(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过Id在数据层中查询指定的对象
+            </summary>
+            <param name="id"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleRepository.GetFirst(Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查询第一个实体类
+            </summary>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleRepository.GetAll(Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            分页查询所有的实体类
+            </summary>
+            <param name="paging"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleRepository.GetByIdList(System.Object[],Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            获取指定 id 集合的实体列表。
+            </summary>
+            <param name="idList"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleRepository.GetByParentIdList(System.Object[],Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过组合父对象的 Id 列表，查找所有的组合子对象的集合。
+            </summary>
+            <param name="parentIdList"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleRepository.GetByParentId(System.Object,Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过父对象 Id 分页查询子对象的集合。
+            </summary>
+            <param name="parentId"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleRepository.GetBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询实体列表。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleRepository.GetFirstBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询单一实体。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleRepository.GetByTreeParentIndex(System.String,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            递归查找所有树型子
+            </summary>
+            <param name="treeIndex"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleRepository.GetByTreePId(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查找指定树节点的直接子节点。
+            </summary>
+            <param name="treePId">需要查找的树节点的Id.</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.OrgPositionRoleConfig">
+            <summary>
+            岗位角色模型 配置类。
+            负责 岗位角色模型 类的实体元数据的配置。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionRoleConfig.ConfigMeta">
+            <summary>
+            配置实体的元数据
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.OrgPositionUser">
+            <summary>
+            岗位用户模型
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.OrgPositionUser.User">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.OrgPositionUserList">
+            <summary>
+            岗位用户模型 列表类。
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.OrgPositionUserList.Item(System.Int32)">
+            <summary>
+            获取或设置指定位置的实体。
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserList.GetEnumerator">
+            <summary>
+            获取本实体列表的迭代器。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserList.Concrete">
+            <summary>
+            返回子实体的强类型迭代接口，方便使用 Linq To Object 操作。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserList.Add(Rafy.RBAC.OrgPositionUser)">
+            <summary>
+            添加指定的实体到集合中。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserList.Contains(Rafy.RBAC.OrgPositionUser)">
+            <summary>
+            判断本集合是否包含指定的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserList.IndexOf(Rafy.RBAC.OrgPositionUser)">
+            <summary>
+            判断指定的实体在本集合中的索引号。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserList.Insert(System.Int32,Rafy.RBAC.OrgPositionUser)">
+            <summary>
+            在指定的位置插入实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserList.Remove(Rafy.RBAC.OrgPositionUser)">
+            <summary>
+            在集合中删除指定的实体。返回是否成功删除。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.OrgPositionUserRepository">
+            <summary>
+            岗位用户模型 仓库类。
+            负责 岗位用户模型 类的查询、保存。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserRepository.#ctor">
+            <summary>
+            单例模式，外界不可以直接构造本对象。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserRepository.GetByUserId(System.Int64)">
+            <summary>
+            通过用户ID查询岗位用户
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserRepository.CreateLinqQuery">
+            <summary>
+            创建一个实体类的 Linq 查询器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserRepository.New">
+            <summary>
+            创建一个新的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserRepository.NewList">
+            <summary>
+            创建一个全新的列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserRepository.CacheById(System.Object)">
+            <summary>
+            优先使用缓存中的数据来通过 Id 获取指定的实体对象
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetById 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserRepository.CacheAll">
+            <summary>
+            优先使用缓存中的数据来查询所有的实体类
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetAll 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserRepository.GetById(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过Id在数据层中查询指定的对象
+            </summary>
+            <param name="id"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserRepository.GetFirst(Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查询第一个实体类
+            </summary>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserRepository.GetAll(Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            分页查询所有的实体类
+            </summary>
+            <param name="paging"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserRepository.GetByIdList(System.Object[],Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            获取指定 id 集合的实体列表。
+            </summary>
+            <param name="idList"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserRepository.GetByParentIdList(System.Object[],Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过组合父对象的 Id 列表，查找所有的组合子对象的集合。
+            </summary>
+            <param name="parentIdList"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserRepository.GetByParentId(System.Object,Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过父对象 Id 分页查询子对象的集合。
+            </summary>
+            <param name="parentId"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserRepository.GetBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询实体列表。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserRepository.GetFirstBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询单一实体。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserRepository.GetByTreeParentIndex(System.String,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            递归查找所有树型子
+            </summary>
+            <param name="treeIndex"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserRepository.GetByTreePId(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查找指定树节点的直接子节点。
+            </summary>
+            <param name="treePId">需要查找的树节点的Id.</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.OrgPositionUserConfig">
+            <summary>
+            岗位用户模型 配置类。
+            负责 岗位用户模型 类的实体元数据的配置。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.OrgPositionUserConfig.ConfigMeta">
+            <summary>
+            配置实体的元数据
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.UserRelation">
+            <summary>
+            用户权限关系
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.UserRelation.EmployeeNumber">
+            <summary>
+            用户编码
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.UserRelation.UserName">
+            <summary>
+            用户名称
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.UserRelation.WF_ApprovedTime">
+            <summary>
+            审批时间
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.UserRelation.RoleName">
+            <summary>
+            角色名称
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.UserRelation.OrganizationName">
+            <summary>
+            组织名称
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.UserRelation.OrganizationCode">
+            <summary>
+            组织CODE
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.UserRelation.SaleInfoName">
+            <summary>
+            销方名称
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.UserRelationList">
+            <summary>
+            用户权限关系 列表类。
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.UserRelationList.Item(System.Int32)">
+            <summary>
+            获取或设置指定位置的实体。
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationList.GetEnumerator">
+            <summary>
+            获取本实体列表的迭代器。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationList.Concrete">
+            <summary>
+            返回子实体的强类型迭代接口，方便使用 Linq To Object 操作。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationList.Add(Rafy.RBAC.UserRelation)">
+            <summary>
+            添加指定的实体到集合中。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationList.Contains(Rafy.RBAC.UserRelation)">
+            <summary>
+            判断本集合是否包含指定的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationList.IndexOf(Rafy.RBAC.UserRelation)">
+            <summary>
+            判断指定的实体在本集合中的索引号。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationList.Insert(System.Int32,Rafy.RBAC.UserRelation)">
+            <summary>
+            在指定的位置插入实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationList.Remove(Rafy.RBAC.UserRelation)">
+            <summary>
+            在集合中删除指定的实体。返回是否成功删除。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.UserRelationRepository">
+            <summary>
+            用户权限关系 仓库类。
+            负责 用户权限关系 类的查询、保存。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationRepository.#ctor">
+            <summary>
+            单例模式，外界不可以直接构造本对象。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationRepository.GetRelationByUserId(System.Int64,Rafy.PagingInfo)">
+            <summary>
+            按用户ID 获取组织
+            </summary>
+            <param name="userId"></param>
+            <param name="pagingInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationRepository.GetRelationByUserOrder(System.Int64,Rafy.PagingInfo)">
+            <summary>
+            按UserId获取
+            </summary>
+            <param name="UserId"></param>
+            <param name="pagingInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationRepository.GetRelationByUserOrder(System.String,System.String,System.String,System.String,Rafy.PagingInfo)">
+            <summary>
+            按其他获取
+            </summary>
+            <param name="orgName">组织名称</param>
+            <param name="saleInfoName">销方名称</param>
+            <param name="userName">用户名称</param>
+            <param name="roleName">角色名称</param>
+            <param name="pagingInfo">分页</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationRepository.GetRelationBy(System.Int64,System.String,System.String,System.String,System.String,Rafy.PagingInfo)">
+            <summary>
+            按用户汇总数据
+            </summary>
+            <param name="userId">UserId</param>
+            <param name="orgName">组织名称</param>
+            <param name="saleInfoName">销方名称</param>
+            <param name="userName">用户名称</param>
+            <param name="roleName">角色名称</param>
+            <param name="pagingInfo">分页</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationRepository.CreateLinqQuery">
+            <summary>
+            创建一个实体类的 Linq 查询器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationRepository.New">
+            <summary>
+            创建一个新的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationRepository.NewList">
+            <summary>
+            创建一个全新的列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationRepository.CacheById(System.Object)">
+            <summary>
+            优先使用缓存中的数据来通过 Id 获取指定的实体对象
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetById 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationRepository.CacheAll">
+            <summary>
+            优先使用缓存中的数据来查询所有的实体类
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetAll 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationRepository.GetById(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过Id在数据层中查询指定的对象
+            </summary>
+            <param name="id"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationRepository.GetFirst(Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查询第一个实体类
+            </summary>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationRepository.GetAll(Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            分页查询所有的实体类
+            </summary>
+            <param name="paging"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationRepository.GetByIdList(System.Object[],Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            获取指定 id 集合的实体列表。
+            </summary>
+            <param name="idList"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationRepository.GetByParentIdList(System.Object[],Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过组合父对象的 Id 列表，查找所有的组合子对象的集合。
+            </summary>
+            <param name="parentIdList"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationRepository.GetByParentId(System.Object,Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过父对象 Id 分页查询子对象的集合。
+            </summary>
+            <param name="parentId"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationRepository.GetBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询实体列表。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationRepository.GetFirstBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询单一实体。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationRepository.GetByTreeParentIndex(System.String,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            递归查找所有树型子
+            </summary>
+            <param name="treeIndex"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationRepository.GetByTreePId(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查找指定树节点的直接子节点。
+            </summary>
+            <param name="treePId">需要查找的树节点的Id.</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.UserRelationConfig">
+            <summary>
+            用户权限关系 配置类。
+            负责 用户权限关系 类的实体元数据的配置。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.UserRelationConfig.ConfigMeta">
+            <summary>
+            配置实体的元数据
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.Enum.DataConstraintRule">
+            <summary>
+            此枚举用于
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.Enum.OperationType">
+            <summary>
+            操作类型
+            </summary>
+        </member>
+        <member name="F:Rafy.RBAC.UserExt.EmployeeNumberProperty">
+            <summary>
+            员工编号 扩展属性。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.UserExt.GetEmployeeNumber(Rafy.Accounts.User)">
+            <summary>
+            获取 员工编号 属性的值。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.UserExt.SetEmployeeNumber(Rafy.Accounts.User,System.String)">
+            <summary>
+            设置 员工编号 属性的值。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.UserExt.SetTerminalNumber(Rafy.Accounts.User,System.String)">
+            <summary>
+            终端号
+            </summary>
+            <param name="me"></param>
+            <param name="value"></param>
+        </member>
+        <member name="F:Rafy.RBAC.UserExt.CompellationProperty">
+            <summary>
+            姓名 扩展属性。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.UserExt.GetCompellation(Rafy.Accounts.User)">
+            <summary>
+            获取 姓名 属性的值。
+            </summary>
+            <param name="me">要获取扩展属性值的对象。</param>
+        </member>
+        <member name="M:Rafy.RBAC.UserExt.SetCompellation(Rafy.Accounts.User,System.String)">
+            <summary>
+            设置 姓名 属性的值。
+            </summary>
+            <param name="me">要设置扩展属性值的对象。</param>
+            <param name="value">设置的值。</param>
+        </member>
+        <member name="F:Rafy.RBAC.UserExt.UserRoleListProperty">
+            <summary>
+            用户下的角色 扩展属性。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.UserExt.GetUserRoleList(Rafy.Accounts.User)">
+            <summary>
+            获取 用户下的角色 属性的值。
+            </summary>
+            <param name="me">要获取扩展属性值的对象。</param>
+        </member>
+        <member name="T:Rafy.RBAC.PermissionMode">
+            <summary>
+            权限管理模式
+            </summary>
+        </member>
+        <member name="F:Rafy.RBAC.PermissionMode.User">
+            <summary>
+            用户授权
+            </summary>
+        </member>
+        <member name="F:Rafy.RBAC.PermissionMode.Org">
+            <summary>
+            组织结构授权
+            </summary>
+        </member>
+        <member name="F:Rafy.RBAC.PermissionMode.Position">
+            <summary>
+            岗位授权
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.Organization">
+            <summary>
+            组织
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.Organization.Name">
+            <summary>
+            组织名称
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.Organization.Code">
+            <summary>
+            组织编码
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.Organization.Description">
+            <summary>
+            组织描述
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.Organization.FullName">
+            <summary>
+            组织全名
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.OrganizationList">
+            <summary>
+            组织 列表类。
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.OrganizationList.Item(System.Int32)">
+            <summary>
+            获取或设置指定位置的实体。
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationList.GetEnumerator">
+            <summary>
+            获取本实体列表的迭代器。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationList.Concrete">
+            <summary>
+            返回子实体的强类型迭代接口，方便使用 Linq To Object 操作。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationList.Add(Rafy.RBAC.Organization)">
+            <summary>
+            添加指定的实体到集合中。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationList.Contains(Rafy.RBAC.Organization)">
+            <summary>
+            判断本集合是否包含指定的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationList.IndexOf(Rafy.RBAC.Organization)">
+            <summary>
+            判断指定的实体在本集合中的索引号。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationList.Insert(System.Int32,Rafy.RBAC.Organization)">
+            <summary>
+            在指定的位置插入实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationList.Remove(Rafy.RBAC.Organization)">
+            <summary>
+            在集合中删除指定的实体。返回是否成功删除。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.OrganizationRepository">
+            <summary>
+            组织 仓库类。
+            负责 组织 类的查询、保存。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationRepository.#ctor">
+            <summary>
+            单例模式，外界不可以直接构造本对象。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationRepository.GetByOrganizationCriteria(Rafy.RBAC.OrganizationCriteria)">
+            <summary>
+            通过组织查询对象查询
+            </summary>
+            <param name="criteria">组织查询对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationRepository.CreateLinqQuery">
+            <summary>
+            创建一个实体类的 Linq 查询器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationRepository.New">
+            <summary>
+            创建一个新的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationRepository.NewList">
+            <summary>
+            创建一个全新的列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationRepository.CacheById(System.Object)">
+            <summary>
+            优先使用缓存中的数据来通过 Id 获取指定的实体对象
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetById 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationRepository.CacheAll">
+            <summary>
+            优先使用缓存中的数据来查询所有的实体类
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetAll 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationRepository.GetById(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过Id在数据层中查询指定的对象
+            </summary>
+            <param name="id"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationRepository.GetFirst(Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查询第一个实体类
+            </summary>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationRepository.GetAll(Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            分页查询所有的实体类
+            </summary>
+            <param name="paging"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationRepository.GetByIdList(System.Object[],Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            获取指定 id 集合的实体列表。
+            </summary>
+            <param name="idList"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationRepository.GetByParentIdList(System.Object[],Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过组合父对象的 Id 列表，查找所有的组合子对象的集合。
+            </summary>
+            <param name="parentIdList"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationRepository.GetByParentId(System.Object,Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过父对象 Id 分页查询子对象的集合。
+            </summary>
+            <param name="parentId"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationRepository.GetBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询实体列表。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationRepository.GetFirstBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询单一实体。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationRepository.GetByTreeParentIndex(System.String,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            递归查找所有树型子
+            </summary>
+            <param name="treeIndex"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationRepository.GetByTreeParentIndex(System.String)">
+            <summary>
+            获取当前节点子节点
+            </summary>
+            <param name="treeIndex">当前节点</param>
+            <returns>返回当前节点和当前节点的子节点</returns>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationRepository.GetByTreePId(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查找指定树节点的直接子节点。
+            </summary>
+            <param name="treePId">需要查找的树节点的Id.</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.OrganizationConfig">
+            <summary>
+            组织 配置类。
+            负责 组织 类的实体元数据的配置。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.OrganizationConfig.ConfigMeta">
+            <summary>
+            配置实体的元数据
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.OrganizationCriteria">
+            <summary>
+            组织查询对象
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.RBACEntity">
+            <summary>
+            权限管理领域模型的基类
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.Resource">
+            <summary>
+            资源
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.Resource.Name">
+            <summary>
+            资源名称
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.Resource.Code">
+            <summary>
+            资源编码
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.Resource.Url">
+            <summary>
+            资源路径
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.Resource.ResultType">
+            <summary>
+            资源类型
+            （该属性以后可能会改为枚举类型）
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.Resource.Description">
+            <summary>
+            资源描述
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.ResourceList">
+            <summary>
+            资源 列表类。
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.ResourceList.Item(System.Int32)">
+            <summary>
+            获取或设置指定位置的实体。
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceList.GetEnumerator">
+            <summary>
+            获取本实体列表的迭代器。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceList.Concrete">
+            <summary>
+            返回子实体的强类型迭代接口，方便使用 Linq To Object 操作。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceList.Add(Rafy.RBAC.Resource)">
+            <summary>
+            添加指定的实体到集合中。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceList.Contains(Rafy.RBAC.Resource)">
+            <summary>
+            判断本集合是否包含指定的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceList.IndexOf(Rafy.RBAC.Resource)">
+            <summary>
+            判断指定的实体在本集合中的索引号。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceList.Insert(System.Int32,Rafy.RBAC.Resource)">
+            <summary>
+            在指定的位置插入实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceList.Remove(Rafy.RBAC.Resource)">
+            <summary>
+            在集合中删除指定的实体。返回是否成功删除。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.ResourceRepository">
+            <summary>
+            资源 仓库类。
+            负责 资源 类的查询、保存。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceRepository.#ctor">
+            <summary>
+            单例模式，外界不可以直接构造本对象。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceRepository.GetByUrl(System.String)">
+            <summary>
+            通过URL获取资源信息
+            </summary>
+            <param name="url">URL</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceRepository.GetByName(System.String)">
+            <summary>
+            根据Name来查询资源信息
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceRepository.CreateLinqQuery">
+            <summary>
+            创建一个实体类的 Linq 查询器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceRepository.New">
+            <summary>
+            创建一个新的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceRepository.NewList">
+            <summary>
+            创建一个全新的列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceRepository.CacheById(System.Object)">
+            <summary>
+            优先使用缓存中的数据来通过 Id 获取指定的实体对象
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetById 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceRepository.CacheAll">
+            <summary>
+            优先使用缓存中的数据来查询所有的实体类
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetAll 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceRepository.GetById(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过Id在数据层中查询指定的对象
+            </summary>
+            <param name="id"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceRepository.GetFirst(Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查询第一个实体类
+            </summary>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceRepository.GetAll(Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            分页查询所有的实体类
+            </summary>
+            <param name="paging"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceRepository.GetByIdList(System.Object[],Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            获取指定 id 集合的实体列表。
+            </summary>
+            <param name="idList"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceRepository.GetByParentIdList(System.Object[],Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过组合父对象的 Id 列表，查找所有的组合子对象的集合。
+            </summary>
+            <param name="parentIdList"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceRepository.GetByParentId(System.Object,Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过父对象 Id 分页查询子对象的集合。
+            </summary>
+            <param name="parentId"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceRepository.GetBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询实体列表。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceRepository.GetFirstBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询单一实体。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceRepository.GetByTreeParentIndex(System.String,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            递归查找所有树型子
+            </summary>
+            <param name="treeIndex"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceRepository.GetByTreePId(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查找指定树节点的直接子节点。
+            </summary>
+            <param name="treePId">需要查找的树节点的Id.</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.ResourceConfig">
+            <summary>
+            资源 配置类。
+            负责 资源 类的实体元数据的配置。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceConfig.ConfigMeta">
+            <summary>
+            配置实体的元数据
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.ResourceOperation">
+            <summary>
+            功能
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.ResourceOperation.Name">
+            <summary>
+            功能名称
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.ResourceOperation.Code">
+            <summary>
+            功能编码
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.ResourceOperation.Description">
+            <summary>
+            功能描述
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.ResourceOperation.OperationType">
+            <summary>
+            功能类型
+            （资源默认功能，有具体用途的功能）
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.ResourceOperation.OperationName">
+            <summary>
+            按钮名称
+            此属性，对应界面按钮对象的operationName属性。
+            用于对按钮进行权限控制。
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.ResourceOperationList">
+            <summary>
+            功能 列表类。
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.ResourceOperationList.Item(System.Int32)">
+            <summary>
+            获取或设置指定位置的实体。
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationList.GetEnumerator">
+            <summary>
+            获取本实体列表的迭代器。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationList.Concrete">
+            <summary>
+            返回子实体的强类型迭代接口，方便使用 Linq To Object 操作。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationList.Add(Rafy.RBAC.ResourceOperation)">
+            <summary>
+            添加指定的实体到集合中。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationList.Contains(Rafy.RBAC.ResourceOperation)">
+            <summary>
+            判断本集合是否包含指定的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationList.IndexOf(Rafy.RBAC.ResourceOperation)">
+            <summary>
+            判断指定的实体在本集合中的索引号。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationList.Insert(System.Int32,Rafy.RBAC.ResourceOperation)">
+            <summary>
+            在指定的位置插入实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationList.Remove(Rafy.RBAC.ResourceOperation)">
+            <summary>
+            在集合中删除指定的实体。返回是否成功删除。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.ResourceOperationRepository">
+            <summary>
+            功能 仓库类。
+            负责 功能 类的查询、保存。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationRepository.#ctor">
+            <summary>
+            单例模式，外界不可以直接构造本对象。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationRepository.GetByOperationIdAndResourceId(System.Int64[],System.Int64)">
+            <summary>
+            通过功能ID和资源ID获取功能
+            </summary>
+            <param name="operationId">功能ID数组</param>
+            <param name="resourceId">资源ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationRepository.CreateLinqQuery">
+            <summary>
+            创建一个实体类的 Linq 查询器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationRepository.New">
+            <summary>
+            创建一个新的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationRepository.NewList">
+            <summary>
+            创建一个全新的列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationRepository.CacheById(System.Object)">
+            <summary>
+            优先使用缓存中的数据来通过 Id 获取指定的实体对象
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetById 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationRepository.CacheAll">
+            <summary>
+            优先使用缓存中的数据来查询所有的实体类
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetAll 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationRepository.GetById(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过Id在数据层中查询指定的对象
+            </summary>
+            <param name="id"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationRepository.GetFirst(Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查询第一个实体类
+            </summary>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationRepository.GetAll(Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            分页查询所有的实体类
+            </summary>
+            <param name="paging"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationRepository.GetByIdList(System.Object[],Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            获取指定 id 集合的实体列表。
+            </summary>
+            <param name="idList"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationRepository.GetByParentIdList(System.Object[],Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过组合父对象的 Id 列表，查找所有的组合子对象的集合。
+            </summary>
+            <param name="parentIdList"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationRepository.GetByParentId(System.Object,Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过父对象 Id 分页查询子对象的集合。
+            </summary>
+            <param name="parentId"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationRepository.GetBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询实体列表。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationRepository.GetFirstBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询单一实体。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationRepository.GetByTreeParentIndex(System.String,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            递归查找所有树型子
+            </summary>
+            <param name="treeIndex"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationRepository.GetByTreePId(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查找指定树节点的直接子节点。
+            </summary>
+            <param name="treePId">需要查找的树节点的Id.</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.ResourceOperationConfig">
+            <summary>
+            功能 配置类。
+            负责 功能 类的实体元数据的配置。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.ResourceOperationConfig.ConfigMeta">
+            <summary>
+            配置实体的元数据
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.ResourceOperationCriteria">
+            <summary>
+            资源功能查询
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.ResourceOperationCriteria.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.ResourceOperationCriteria.ResourceId">
+            <summary>
+            资源ID
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.ResourceOperationCriteria.OperationId">
+            <summary>
+            资源ID
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.Role">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.Role.Name">
+            <summary>
+            角色名称
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.Role.Code">
+            <summary>
+            角色编码
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.Role.Description">
+            <summary>
+            角色描述
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.RoleList">
+            <summary>
+            角色 列表类。
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.RoleList.Item(System.Int32)">
+            <summary>
+            获取或设置指定位置的实体。
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleList.GetEnumerator">
+            <summary>
+            获取本实体列表的迭代器。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleList.Concrete">
+            <summary>
+            返回子实体的强类型迭代接口，方便使用 Linq To Object 操作。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleList.Add(Rafy.RBAC.Role)">
+            <summary>
+            添加指定的实体到集合中。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.RoleList.Contains(Rafy.RBAC.Role)">
+            <summary>
+            判断本集合是否包含指定的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleList.IndexOf(Rafy.RBAC.Role)">
+            <summary>
+            判断指定的实体在本集合中的索引号。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleList.Insert(System.Int32,Rafy.RBAC.Role)">
+            <summary>
+            在指定的位置插入实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleList.Remove(Rafy.RBAC.Role)">
+            <summary>
+            在集合中删除指定的实体。返回是否成功删除。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.RoleRepository">
+            <summary>
+            角色 仓库类。
+            负责 角色 类的查询、保存。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.RoleRepository.#ctor">
+            <summary>
+            单例模式，外界不可以直接构造本对象。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.RoleRepository.GetByCriteria(Rafy.RBAC.RoleCriteria)">
+            <summary>
+            通过角色查询对象查询角色信息
+            </summary>
+            <param name="criteria">角色查询对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleRepository.GetByRealDataId(System.String[])">
+            <summary>
+            通过原角色ID查询角色数据
+            </summary>
+            <param name="ids">原角色ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleRepository.CreateLinqQuery">
+            <summary>
+            创建一个实体类的 Linq 查询器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleRepository.New">
+            <summary>
+            创建一个新的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleRepository.NewList">
+            <summary>
+            创建一个全新的列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleRepository.CacheById(System.Object)">
+            <summary>
+            优先使用缓存中的数据来通过 Id 获取指定的实体对象
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetById 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleRepository.CacheAll">
+            <summary>
+            优先使用缓存中的数据来查询所有的实体类
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetAll 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleRepository.GetById(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过Id在数据层中查询指定的对象
+            </summary>
+            <param name="id"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleRepository.GetFirst(Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查询第一个实体类
+            </summary>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleRepository.GetAll(Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            分页查询所有的实体类
+            </summary>
+            <param name="paging"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleRepository.GetByIdList(System.Object[],Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            获取指定 id 集合的实体列表。
+            </summary>
+            <param name="idList"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleRepository.GetByParentIdList(System.Object[],Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过组合父对象的 Id 列表，查找所有的组合子对象的集合。
+            </summary>
+            <param name="parentIdList"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleRepository.GetByParentId(System.Object,Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过父对象 Id 分页查询子对象的集合。
+            </summary>
+            <param name="parentId"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleRepository.GetBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询实体列表。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleRepository.GetFirstBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询单一实体。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleRepository.GetByTreeParentIndex(System.String,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            递归查找所有树型子
+            </summary>
+            <param name="treeIndex"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleRepository.GetByTreePId(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查找指定树节点的直接子节点。
+            </summary>
+            <param name="treePId">需要查找的树节点的Id.</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.RoleConfig">
+            <summary>
+            角色 配置类。
+            负责 角色 类的实体元数据的配置。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.RoleConfig.ConfigMeta">
+            <summary>
+            配置实体的元数据
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.RoleCriteria">
+            <summary>
+            角色查询对象
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.RoleOperation">
+            <summary>
+            角色的功能
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.RoleOperation.Operation">
+            <summary>
+            资源操作
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.RoleOperationList">
+            <summary>
+            角色的功能 列表类。
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.RoleOperationList.Item(System.Int32)">
+            <summary>
+            获取或设置指定位置的实体。
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationList.GetEnumerator">
+            <summary>
+            获取本实体列表的迭代器。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationList.Concrete">
+            <summary>
+            返回子实体的强类型迭代接口，方便使用 Linq To Object 操作。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationList.Add(Rafy.RBAC.RoleOperation)">
+            <summary>
+            添加指定的实体到集合中。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationList.Contains(Rafy.RBAC.RoleOperation)">
+            <summary>
+            判断本集合是否包含指定的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationList.IndexOf(Rafy.RBAC.RoleOperation)">
+            <summary>
+            判断指定的实体在本集合中的索引号。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationList.Insert(System.Int32,Rafy.RBAC.RoleOperation)">
+            <summary>
+            在指定的位置插入实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationList.Remove(Rafy.RBAC.RoleOperation)">
+            <summary>
+            在集合中删除指定的实体。返回是否成功删除。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.RoleOperationRepository">
+            <summary>
+            角色的功能 仓库类。
+            负责 角色的功能 类的查询、保存。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationRepository.#ctor">
+            <summary>
+            单例模式，外界不可以直接构造本对象。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationRepository.GetByRoleIds(System.Int64[])">
+            <summary>
+            根据角色ID数组查询角色功能
+            </summary>
+            <param name="roleIds">角色ID数组</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationRepository.GetOperationsByRoleId(System.String)">
+            <summary>
+            根据当前roleId获取角色操作
+            </summary>
+            <param name="roleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationRepository.GetByRoleId(System.Int64)">
+            <summary>
+            此方法通过角色ID贪婪加载操作和资源。
+            </summary>
+            <param name="id">角色ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationRepository.CreateLinqQuery">
+            <summary>
+            创建一个实体类的 Linq 查询器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationRepository.New">
+            <summary>
+            创建一个新的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationRepository.NewList">
+            <summary>
+            创建一个全新的列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationRepository.CacheById(System.Object)">
+            <summary>
+            优先使用缓存中的数据来通过 Id 获取指定的实体对象
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetById 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationRepository.CacheAll">
+            <summary>
+            优先使用缓存中的数据来查询所有的实体类
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetAll 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationRepository.GetById(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过Id在数据层中查询指定的对象
+            </summary>
+            <param name="id"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationRepository.GetFirst(Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查询第一个实体类
+            </summary>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationRepository.GetAll(Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            分页查询所有的实体类
+            </summary>
+            <param name="paging"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationRepository.GetByIdList(System.Object[],Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            获取指定 id 集合的实体列表。
+            </summary>
+            <param name="idList"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationRepository.GetByParentIdList(System.Object[],Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过组合父对象的 Id 列表，查找所有的组合子对象的集合。
+            </summary>
+            <param name="parentIdList"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationRepository.GetByParentId(System.Object,Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过父对象 Id 分页查询子对象的集合。
+            </summary>
+            <param name="parentId"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationRepository.GetBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询实体列表。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationRepository.GetFirstBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询单一实体。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationRepository.GetByTreeParentIndex(System.String,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            递归查找所有树型子
+            </summary>
+            <param name="treeIndex"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationRepository.GetByTreePId(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查找指定树节点的直接子节点。
+            </summary>
+            <param name="treePId">需要查找的树节点的Id.</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.RoleOperationConfig">
+            <summary>
+            角色的功能 配置类。
+            负责 角色的功能 类的实体元数据的配置。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.RoleOperationConfig.ConfigMeta">
+            <summary>
+            配置实体的元数据
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.UserRole">
+            <summary>
+            用户角色
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.UserRole.Role">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="F:Rafy.RBAC.UserRole.RO_EmployeeNumberProperty">
+            <summary>
+            员工号
+            </summary>
+        </member>
+        <member name="F:Rafy.RBAC.UserRole.RO_UserNameProperty">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="F:Rafy.RBAC.UserRole.RO_RoleNameProperty">
+            <summary>
+            角色名称
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.UserRoleList">
+            <summary>
+            用户角色 列表类。
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.UserRoleList.Item(System.Int32)">
+            <summary>
+            获取或设置指定位置的实体。
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleList.GetEnumerator">
+            <summary>
+            获取本实体列表的迭代器。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleList.Concrete">
+            <summary>
+            返回子实体的强类型迭代接口，方便使用 Linq To Object 操作。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleList.Add(Rafy.RBAC.UserRole)">
+            <summary>
+            添加指定的实体到集合中。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleList.Contains(Rafy.RBAC.UserRole)">
+            <summary>
+            判断本集合是否包含指定的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleList.IndexOf(Rafy.RBAC.UserRole)">
+            <summary>
+            判断指定的实体在本集合中的索引号。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleList.Insert(System.Int32,Rafy.RBAC.UserRole)">
+            <summary>
+            在指定的位置插入实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleList.Remove(Rafy.RBAC.UserRole)">
+            <summary>
+            在集合中删除指定的实体。返回是否成功删除。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.UserRoleRepository">
+            <summary>
+            用户角色 仓库类。
+            负责 用户角色 类的查询、保存。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleRepository.#ctor">
+            <summary>
+            单例模式，外界不可以直接构造本对象。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleRepository.GetByUserId(System.Collections.Generic.List{System.Int64})">
+            <summary>
+            根据UserID获取RoleId
+            </summary>
+            <param name="userIds">用户Id集合</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleRepository.GetByRoleId(System.Int64)">
+            <summary>
+            根据 RoleId 获取 UserId
+            </summary>
+            <param name="roleId">用户Id集合</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleRepository.GetByCriteria(Rafy.RBAC.UserRoleCriteria)">
+            <summary>
+            通过查询对象查询用户角色
+            </summary>
+            <param name="criteria">用户角色查询对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleRepository.CreateLinqQuery">
+            <summary>
+            创建一个实体类的 Linq 查询器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleRepository.New">
+            <summary>
+            创建一个新的实体。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleRepository.NewList">
+            <summary>
+            创建一个全新的列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleRepository.CacheById(System.Object)">
+            <summary>
+            优先使用缓存中的数据来通过 Id 获取指定的实体对象
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetById 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleRepository.CacheAll">
+            <summary>
+            优先使用缓存中的数据来查询所有的实体类
+            
+            如果该实体的缓存没有打开，则本方法会直接调用 GetAll 并返回结果。
+            如果缓存中没有这些数据，则本方法同时会把数据缓存起来。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleRepository.GetById(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过Id在数据层中查询指定的对象
+            </summary>
+            <param name="id"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleRepository.GetFirst(Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查询第一个实体类
+            </summary>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleRepository.GetAll(Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            分页查询所有的实体类
+            </summary>
+            <param name="paging"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleRepository.GetByIdList(System.Object[],Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            获取指定 id 集合的实体列表。
+            </summary>
+            <param name="idList"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleRepository.GetByParentIdList(System.Object[],Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过组合父对象的 Id 列表，查找所有的组合子对象的集合。
+            </summary>
+            <param name="parentIdList"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleRepository.GetByParentId(System.Object,Rafy.PagingInfo,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            通过父对象 Id 分页查询子对象的集合。
+            </summary>
+            <param name="parentId"></param>
+            <param name="paging">分页信息。</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleRepository.GetBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询实体列表。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleRepository.GetFirstBy(Rafy.Domain.CommonQueryCriteria)">
+            <summary>
+            通过 CommonQueryCriteria 来查询单一实体。
+            </summary>
+            <param name="criteria">常用查询条件。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleRepository.GetByTreeParentIndex(System.String,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            递归查找所有树型子
+            </summary>
+            <param name="treeIndex"></param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleRepository.GetByTreePId(System.Object,Rafy.Domain.EagerLoadOptions)">
+            <summary>
+            查找指定树节点的直接子节点。
+            </summary>
+            <param name="treePId">需要查找的树节点的Id.</param>
+            <param name="eagerLoad">需要贪婪加载的属性。</param>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.UserRoleConfig">
+            <summary>
+            用户角色 配置类。
+            负责 用户角色 类的实体元数据的配置。
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.UserRoleConfig.ConfigMeta">
+            <summary>
+            配置实体的元数据
+            </summary>
+        </member>
+        <member name="T:Rafy.RBAC.UserRoleCriteria">
+            <summary>
+            用户角色查询对象
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.MetaExtensions.MapTable(Rafy.MetaModel.EntityMeta,System.String)">
+            <summary>
+            指定某实体映射的表名。
+            </summary>
+            <param name="meta"></param>
+            <param name="tableName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Rafy.RBAC.UserRepositoryExt">
+            <summary>
+            用户仓库扩展
+            </summary>
+        </member>
+        <member name="M:Rafy.RBAC.UserRepositoryExt.GetAuthUserByPermissionId(System.Int64)">
+            <summary>
+            通过岗位ID获取已授权的用户
+            </summary>
+            <param name="permissionId">岗位ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRepositoryExt.GetUnAuthByPermissionId(System.Int64)">
+            <summary>
+            通过岗位ID获取未授权的用户
+            </summary>
+            <param name="permisssionId">岗位ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRepositoryExt.GetByUserCriteria(Rafy.RBAC.UserCriteria)">
+            <summary>
+            通过用户查询对象，查询用户信息
+            </summary>
+            <param name="criteria">用户查询对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rafy.RBAC.UserRepositoryExt.GetUserListByRoleCodeAndSaleInfoID(System.String,System.Int64)">
+            <summary>
+            根据角色编码和销方主键获取用户列表
+            </summary>
+            <param name="roleCode">角色编码</param>
+            <param name="saleInfoID">销方的主键</param>
+            <returns>返回符合条件的用户列表</returns>
+        </member>
+        <member name="T:Rafy.RBAC.UserCriteria">
+            <summary>
+            用户查询对象
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.RBACPlugin.DbSettingName">
+            <summary>
+            数据库连接配置
+            </summary>
+        </member>
+        <member name="P:Rafy.RBAC.RBACPlugin.PermissionMode">
+            <summary>
+            权限管理模式
+            </summary>
+        </member>
+    </members>
+</doc>
