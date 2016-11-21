@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class\Cache\CacheManager.cs" />
+    <Compile Include="Class\Descript\DescriptAES.cs" />
     <Compile Include="Class\IO\FileHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
