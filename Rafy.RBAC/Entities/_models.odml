@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" HideNonsenceLabels="false">
+  <EntityTypes>
+    <EntityTypeElement FullName="Rafy.RBAC.Organization" Label="组织" Left="290" Top="25" Width="0" Height="0" HideProperties="true" IsAggtRoot="true">
+      <Properties>
+        <PropertyElement Name="Name" PropertyType="String" Label="组织名称" />
+        <PropertyElement Name="Code" PropertyType="String" Label="组织编码" />
+        <PropertyElement Name="Description" PropertyType="String" Label="组织描述" />
+        <PropertyElement Name="FullName" PropertyType="String" Label="组织全名" />
+      </Properties>
+    </EntityTypeElement>
+    <EntityTypeElement FullName="Rafy.RBAC.OrganizationUser" Label="组织用户" Left="88" Top="120" Width="0" Height="0" HideProperties="true" IsAggtRoot="false">
+      <Properties />
+    </EntityTypeElement>
+    <EntityTypeElement FullName="Rafy.RBAC.OrgPosition" Label="岗位模型" Left="566" Top="30" Width="0" Height="0" HideProperties="true" IsAggtRoot="false">
+      <Properties>
+        <PropertyElement Name="Name" PropertyType="String" Label="岗位名称" />
+        <PropertyElement Name="Code" PropertyType="String" Label="岗位编码" />
+        <PropertyElement Name="Description" PropertyType="String" Label="岗位描述" />
+      </Properties>
+    </EntityTypeElement>
+    <EntityTypeElement FullName="Rafy.RBAC.OrgPositionRole" Label="岗位角色模型" Left="714.8" Top="266" Width="0" Height="0" HideProperties="true" IsAggtRoot="false">
+      <Properties />
+    </EntityTypeElement>
+    <EntityTypeElement FullName="Rafy.RBAC.OrgPositionUser" Label="岗位用户模型" Left="710" Top="148.40000000000003" Width="0" Height="0" HideProperties="true" IsAggtRoot="false">
+      <Properties />
+    </EntityTypeElement>
+    <EntityTypeElement FullName="Rafy.RBAC.RBACEntity" Label="权限管理领域模型的基类" Left="368.20000000000005" Top="208.39999999999998" Width="0" Height="0" HideProperties="true" IsAggtRoot="false">
+      <Properties />
+    </EntityTypeElement>
+    <EntityTypeElement FullName="Rafy.RBAC.Resource" Label="资源" Left="73.399999999999977" Top="213.60000000000008" Width="0" Height="0" HideProperties="true" IsAggtRoot="true">
+      <Properties>
+        <PropertyElement Name="Name" PropertyType="String" Label="资源名称" />
+        <PropertyElement Name="Code" PropertyType="String" Label="资源编码" />
+        <PropertyElement Name="Url" PropertyType="String" Label="资源路径" />
+        <PropertyElement Name="ResultType" PropertyType="String" Label="资源类型（该属性以后可能会改为枚举类型）" />
+        <PropertyElement Name="Description" PropertyType="String" Label="资源描述" />
+      </Properties>
+    </EntityTypeElement>
+    <EntityTypeElement FullName="Rafy.RBAC.ResourceOperation" Label="功能" Left="66.600000000000023" Top="315.40000000000009" Width="0" Height="0" HideProperties="true" IsAggtRoot="false">
+      <Properties>
+        <PropertyElement Name="Name" PropertyType="String" Label="功能名称" />
+        <PropertyElement Name="Code" PropertyType="String" Label="功能编码" />
+        <PropertyElement Name="Description" PropertyType="String" Label="功能描述" />
+        <PropertyElement Name="OperationType" PropertyType="OperationType" Label="功能类型（资源默认功能，有具体用途的功能）" />
+        <PropertyElement Name="OperationName" PropertyType="String" Label="此属性，对应界面按钮对象的operationName属性。" />
+      </Properties>
+    </EntityTypeElement>
+    <EntityTypeElement FullName="Rafy.RBAC.Role" Label="角色" Left="441.4" Top="413.4" Width="0" Height="0" HideProperties="true" IsAggtRoot="true">
+      <Properties>
+        <PropertyElement Name="Name" PropertyType="String" Label="角色名称" />
+        <PropertyElement Name="Code" PropertyType="String" Label="角色编码" />
+        <PropertyElement Name="Description" PropertyType="String" Label="角色描述" />
+      </Properties>
+    </EntityTypeElement>
+    <EntityTypeElement FullName="Rafy.RBAC.RoleOperation" Label="角色的功能" Left="162.80000000000013" Top="414.20000000000016" Width="0" Height="0" HideProperties="true" IsAggtRoot="false">
+      <Properties />
+    </EntityTypeElement>
+    <EntityTypeElement FullName="Rafy.RBAC.UserRole" Label="用户角色" Left="695.80000000000007" Top="392.20000000000005" Width="0" Height="0" HideProperties="true" IsAggtRoot="false">
+      <Properties>
+        <PropertyElement Name="RO_EmployeeNumber" PropertyType="String" />
+        <PropertyElement Name="RO_UserName" PropertyType="String" />
+        <PropertyElement Name="RO_RoleName" PropertyType="String" />
+      </Properties>
+    </EntityTypeElement>
+  </EntityTypes>
+  <EnumTypes />
+  <Connections>
+    <ConnectionElement From="Rafy.RBAC.Organization" To="Rafy.RBAC.RBACEntity" Hidden="false" LabelVisible="true" ConnectionType="Inheritance">
+      <FromPointX xsi:nil="true" />
+      <FromPointY xsi:nil="true" />
+      <ToPointX xsi:nil="true" />
+      <ToPointY xsi:nil="true" />
+    </ConnectionElement>
+    <ConnectionElement From="Rafy.RBAC.OrganizationUser" To="Rafy.RBAC.Organization" Label="OrganizationUserList" Hidden="false" LabelVisible="true" ConnectionType="Composition">
+      <FromPointX xsi:nil="true" />
+      <FromPointY xsi:nil="true" />
+      <ToPointX xsi:nil="true" />
+      <ToPointY xsi:nil="true" />
+    </ConnectionElement>
+    <ConnectionElement From="Rafy.RBAC.OrgPosition" To="Rafy.RBAC.Organization" Label="OrgPositionList" Hidden="false" LabelVisible="true" ConnectionType="Composition">
+      <FromPointX xsi:nil="true" />
+      <FromPointY xsi:nil="true" />
+      <ToPointX xsi:nil="true" />
+      <ToPointY xsi:nil="true" />
+    </ConnectionElement>
+    <ConnectionElement From="Rafy.RBAC.OrganizationUser" To="Rafy.RBAC.RBACEntity" Hidden="false" LabelVisible="true" ConnectionType="Inheritance">
+      <FromPointX xsi:nil="true" />
+      <FromPointY xsi:nil="true" />
+      <ToPointX xsi:nil="true" />
+      <ToPointY xsi:nil="true" />
+    </ConnectionElement>
+    <ConnectionElement From="Rafy.RBAC.OrgPosition" To="Rafy.RBAC.RBACEntity" Hidden="false" LabelVisible="true" ConnectionType="Inheritance">
+      <FromPointX xsi:nil="true" />
+      <FromPointY xsi:nil="true" />
+      <ToPointX xsi:nil="true" />
+      <ToPointY xsi:nil="true" />
+    </ConnectionElement>
+    <ConnectionElement From="Rafy.RBAC.OrgPositionUser" To="Rafy.RBAC.OrgPosition" Label="OrgPositionUserList" Hidden="false" LabelVisible="true" ConnectionType="Composition">
+      <FromPointX xsi:nil="true" />
+      <FromPointY xsi:nil="true" />
+      <ToPointX xsi:nil="true" />
+      <ToPointY xsi:nil="true" />
+    </ConnectionElement>
+    <ConnectionElement From="Rafy.RBAC.OrgPositionRole" To="Rafy.RBAC.OrgPosition" Label="OrgPositionRoleList" Hidden="false" LabelVisible="true" ConnectionType="Composition">
+      <FromPointX xsi:nil="true" />
+      <FromPointY xsi:nil="true" />
+      <ToPointX xsi:nil="true" />
+      <ToPointY xsi:nil="true" />
+    </ConnectionElement>
+    <ConnectionElement From="Rafy.RBAC.OrgPositionRole" To="Rafy.RBAC.RBACEntity" Hidden="false" LabelVisible="true" ConnectionType="Inheritance">
+      <FromPointX xsi:nil="true" />
+      <FromPointY xsi:nil="true" />
+      <ToPointX xsi:nil="true" />
+      <ToPointY xsi:nil="true" />
+    </ConnectionElement>
+    <ConnectionElement From="Rafy.RBAC.OrgPositionRole" To="Rafy.RBAC.Role" Label="Role" Hidden="false" LabelVisible="true" ConnectionType="Reference">
+      <FromPointX xsi:nil="true" />
+      <FromPointY xsi:nil="true" />
+      <ToPointX xsi:nil="true" />
+      <ToPointY xsi:nil="true" />
+    </ConnectionElement>
+    <ConnectionElement From="Rafy.RBAC.OrgPositionUser" To="Rafy.RBAC.RBACEntity" Hidden="false" LabelVisible="true" ConnectionType="Inheritance">
+      <FromPointX xsi:nil="true" />
+      <FromPointY xsi:nil="true" />
+      <ToPointX xsi:nil="true" />
+      <ToPointY xsi:nil="true" />
+    </ConnectionElement>
+    <ConnectionElement From="Rafy.RBAC.Resource" To="Rafy.RBAC.RBACEntity" Hidden="false" LabelVisible="true" ConnectionType="Inheritance">
+      <FromPointX xsi:nil="true" />
+      <FromPointY xsi:nil="true" />
+      <ToPointX xsi:nil="true" />
+      <ToPointY xsi:nil="true" />
+    </ConnectionElement>
+    <ConnectionElement From="Rafy.RBAC.ResourceOperation" To="Rafy.RBAC.Resource" Label="ResourceOperationList" Hidden="false" LabelVisible="true" ConnectionType="Composition">
+      <FromPointX xsi:nil="true" />
+      <FromPointY xsi:nil="true" />
+      <ToPointX xsi:nil="true" />
+      <ToPointY xsi:nil="true" />
+    </ConnectionElement>
+    <ConnectionElement From="Rafy.RBAC.ResourceOperation" To="Rafy.RBAC.RBACEntity" Hidden="false" LabelVisible="true" ConnectionType="Inheritance">
+      <FromPointX xsi:nil="true" />
+      <FromPointY xsi:nil="true" />
+      <ToPointX xsi:nil="true" />
+      <ToPointY xsi:nil="true" />
+    </ConnectionElement>
+    <ConnectionElement From="Rafy.RBAC.Role" To="Rafy.RBAC.RBACEntity" Hidden="false" LabelVisible="true" ConnectionType="Inheritance">
+      <FromPointX xsi:nil="true" />
+      <FromPointY xsi:nil="true" />
+      <ToPointX xsi:nil="true" />
+      <ToPointY xsi:nil="true" />
+    </ConnectionElement>
+    <ConnectionElement From="Rafy.RBAC.RoleOperation" To="Rafy.RBAC.Role" Label="RoleOperationList" Hidden="false" LabelVisible="true" ConnectionType="Composition">
+      <FromPointX xsi:nil="true" />
+      <FromPointY xsi:nil="true" />
+      <ToPointX xsi:nil="true" />
+      <ToPointY xsi:nil="true" />
+    </ConnectionElement>
+    <ConnectionElement From="Rafy.RBAC.RoleOperation" To="Rafy.RBAC.RBACEntity" Hidden="false" LabelVisible="true" ConnectionType="Inheritance">
+      <FromPointX xsi:nil="true" />
+      <FromPointY xsi:nil="true" />
+      <ToPointX xsi:nil="true" />
+      <ToPointY xsi:nil="true" />
+    </ConnectionElement>
+    <ConnectionElement From="Rafy.RBAC.RoleOperation" To="Rafy.RBAC.ResourceOperation" Label="Operation" Hidden="false" LabelVisible="true" ConnectionType="Reference">
+      <FromPointX xsi:nil="true" />
+      <FromPointY xsi:nil="true" />
+      <ToPointX xsi:nil="true" />
+      <ToPointY xsi:nil="true" />
+    </ConnectionElement>
+    <ConnectionElement From="Rafy.RBAC.UserRole" To="Rafy.RBAC.RBACEntity" Hidden="false" LabelVisible="true" ConnectionType="Inheritance">
+      <FromPointX xsi:nil="true" />
+      <FromPointY xsi:nil="true" />
+      <ToPointX xsi:nil="true" />
+      <ToPointY xsi:nil="true" />
+    </ConnectionElement>
+    <ConnectionElement From="Rafy.RBAC.UserRole" To="Rafy.RBAC.Role" Label="Role" Hidden="false" LabelVisible="true" ConnectionType="Reference">
+      <FromPointX xsi:nil="true" />
+      <FromPointY xsi:nil="true" />
+      <ToPointX xsi:nil="true" />
+      <ToPointY xsi:nil="true" />
+    </ConnectionElement>
+  </Connections>
+</Document>
