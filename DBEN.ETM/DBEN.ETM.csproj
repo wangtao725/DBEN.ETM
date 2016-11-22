@@ -267,6 +267,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\ETM\AllocationTable.cshtml" />
+    <Content Include="Views\TaxApply\CorporateIncomeTax\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
