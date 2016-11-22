@@ -266,11 +266,12 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\ETM\AllocationTable.cshtml" />
+    <Content Include="Views\TaxApply\CorporateIncomeTax\AllocationTable.cshtml" />
     <Content Include="Views\TaxApply\CorporateIncomeTax\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ETM\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
