@@ -1,0 +1,96 @@
+﻿* {
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #666;
+}
+
+li {
+    list-style: none;
+}
+
+body {
+    font: 10px/21px "Microsoft YaHei","宋体", 'Myriad Pro','Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+img {
+    border: none;
+}
+
+.center {
+    text-align: center;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.txt {
+    border: none;
+    width: 100px;
+}
+
+.txt50{
+    border: none;
+    width:40px;
+    overflow-x:visible;
+    overflow-y:visible;
+}
+
+.txt80{
+    border: none;
+    width:80px;
+    overflow-x:visible;
+    overflow-y:visible;
+}
+
+.clear {
+    clear: both;
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    font-size: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.clearfix {
+    zoom: 1;
+}
+
+.span {
+    display: inline-block;
+}
+
+table {
+    font-size:12px;
+    width: 894px;
+    border-collapse: collapse; /* border:1px solid red;*/
+}
+
+tr td {
+    height: 25px;
+    border: 1px solid #000;
+    text-align: center;
+}
+@media print{
+    div{display:none}
+    .bgnoprint{
+       background:display:none;
+    }
+
+    .noprint{
+       display:none;
+       text-align:right;
+    }
+}
