@@ -269,6 +269,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\TaxApply\CorporateIncomeTax\AllocationTable.cshtml" />
     <Content Include="Views\TaxApply\CorporateIncomeTax\Index.cshtml" />
+    <Content Include="Views\TaxApply\CorporateIncomeTax\CrossRegionalBusinessDetailTable.cshtml" />
+    <Content Include="Views\TaxApply\CorporateIncomeTax\OverseasCreditTable.cshtml" />
+    <Content Include="Views\TaxApply\CorporateIncomeTax\OverseasBranchesTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
