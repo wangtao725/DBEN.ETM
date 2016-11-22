@@ -4,57 +4,56 @@
     ViewBag.Title = "登录";
 }
 
-<h2>@ViewBag.Title。</h2>
 <div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    <div class="col-sm-8 col-sm-offset-2 text">
+        <a href="#"><h1><strong>登录</strong></h1></a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3 form-box">
+        <div class="form-top">
+            <div class="form-top-left">
+                <h3>登录</h3>
+                <p>Enter your username and password to log on:</p>
+            </div>
+            <div class="form-top-right">
+                <i class="fa fa-lock"></i>
+            </div>
+        </div>
+        <div class="form-bottom">
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "login-form", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                <h4>使用本地帐户登录。</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @*@Html.Message()*@
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                    </div>
+                    <label class="sr-only" for="UserName">用户名</label>
+                    @Html.TextBoxFor(n => n.Email, new { placeholder = "用户名", @class = "form-username form-control" })
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
+                    <label class="sr-only" for="Password">密码</label>
+                    @Html.TextBoxFor(n => n.Password, new { type = "password", placeholder = "密码", @class = "form-username form-control" })
                 </div>
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                        </div>
-                    </div>
+                    @Html.CheckBoxFor(n => n.RememberMe)
+                    <label for="RememberMe">自动登录</label>
                 </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="登录" class="btn btn-default" />
-                    </div>
-                </div>
-                <p>
-                    @Html.ActionLink("注册为新用户", "Register")
-                </p>
-                @* 在为密码重置功能启用帐户确认后启用此项
-                    <p>
-                        @Html.ActionLink("忘记了密码?", "ForgotPassword")
-                    </p>*@
+                <input type="hidden" name="returnUrl" value="@Request.QueryString["returnUrl"]">
+                <button type="submit" class="btn">登录</button>
             }
-        </section>
-    </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
+            @*@using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
+            {
+                <div class="form-group">
+                    <p></p>
+                    <span class="notregister">没有账号？</span>
+                    <a href="#">立即注册</a>
+                    @Html.AntiForgeryToken()
+                    @foreach (var provider in providers)
+                    {
+                        <button type="submit" class="thirdloginbtn @provider.AuthenticationType" id="@provider.AuthenticationType" name="provider" value="@provider.AuthenticationType" title="Log in using your @provider.Caption account">@provider.AuthenticationType</button>
+                    }
+                </div>
+            }*@
+        </div>
     </div>
 </div>
 
