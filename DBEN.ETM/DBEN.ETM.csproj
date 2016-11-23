@@ -278,6 +278,9 @@
     <Content Include="Views\TaxApply\CorporateIncomeTax\DetailedListOfTaxCreditTable.cshtml" />
     <Content Include="Views\TaxApply\CorporateIncomeTax\SoftwareTable.cshtml" />
     <Content Include="Views\TaxApply\CorporateIncomeTax\HighTechEnterprisesTable.cshtml" />
+    <Content Include="Views\TaxApply\CorporateIncomeTax\TaxConcessionsTable.cshtml" />
+    <Content Include="Views\TaxApply\CorporateIncomeTax\StatementTable.cshtml" />
+    <Content Include="Views\TaxApply\CorporateIncomeTax\ReductionTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
