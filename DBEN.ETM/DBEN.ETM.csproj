@@ -273,6 +273,7 @@
     <Content Include="Views\TaxApply\CorporateIncomeTax\CrossRegionalBusinessDetailTable.cshtml" />
     <Content Include="Views\TaxApply\CorporateIncomeTax\OverseasCreditTable.cshtml" />
     <Content Include="Views\TaxApply\CorporateIncomeTax\OverseasBranchesTable.cshtml" />
+    <Content Include="Views\TaxApply\CorporateIncomeTax\IncomeFromOverseasTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
