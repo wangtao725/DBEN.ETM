@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "DetailedListOfTaxCreditTable";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>税额抵免优惠明细表</title>
+
+</head>
+<body>
+    <form action="/" method="post">
+        <table border="1" cellspacing="0" class="title">
+            <tr><td colspan="14"><center><h2>税额抵免优惠明细表</h2></center></td></tr>
+            <tr><td rowspan="6">行次</td><td rowspan="6">项目</td><td rowspan="3">年度</td><td rowspan="3">本年抵免前应纳税额</td><td rowspan="3">本年允许抵免的专用设备投资额</td><td rowspan="3">本年可抵免税额</td><td rowspan="2" colspan="6"><center>以前年度已抵免额</center></td><td rowspan="3">本年实际抵免的各年度税额</td><td rowspan="3">可结转以后年度抵免的税额</td></tr>
+            <tr></tr>
+            <tr><td>前五年度</td><td>前四年度</td><td>前三年度</td><td>前二年度</td><td>前一年度</td><td>小计</td></tr>
+            <tr><td rowspan="3">1</td><td rowspan="3">2</td><td rowspan="3">3</td><td rowspan="3">4=3×10%</td><td rowspan="3">5</td><td rowspan="3">6</td><td rowspan="3">7（2+3+4+5+6）</td><td rowspan="3">8</td><td rowspan="3">9</td><td rowspan="3">10（5+6+7+8+9）</td><td rowspan="3">11</td><td rowspan="3">12（4-10-11）</td></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr><td>1</td><td>前五年度</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>2</td><td>前四年度</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>3</td><td>前三年度</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>4</td><td>前二年度</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>5</td><td>前一年度</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>6</td><td>本年度</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>7</td><td colspan="11">本年实际抵免税额合计</td><td></td><td></tr>
+            <tr><td>8</td><td colspan="12">可结转以后年度抵免的税额合计</td><td></td></tr>
+            <tr><td>9</td><td rowspan="3">专用设备投资情况</td><td colspan="8">本年允许抵免的环境保护专用设备投资额</td><td colspan="4"></td></tr>
+            <tr><td>10</td><td colspan="8">本年允许抵免节能节水的专用设备投资额</td><td colspan="4"></td></tr>
+            <tr><td>11</td><td colspan="8">本年允许抵免的安全生产专用设备投资额</td><td colspan="4"></td></tr>
+        </table>
+    </form>
+</body>
+</html>

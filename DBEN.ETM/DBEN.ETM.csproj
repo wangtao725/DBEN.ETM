@@ -274,6 +274,10 @@
     <Content Include="Views\TaxApply\CorporateIncomeTax\OverseasCreditTable.cshtml" />
     <Content Include="Views\TaxApply\CorporateIncomeTax\OverseasBranchesTable.cshtml" />
     <Content Include="Views\TaxApply\CorporateIncomeTax\IncomeFromOverseasTable.cshtml" />
+    <Content Include="Views\TaxApply\CorporateIncomeTax\OverseasIncomeTaxCreditTable.cshtml" />
+    <Content Include="Views\TaxApply\CorporateIncomeTax\DetailedListOfTaxCreditTable.cshtml" />
+    <Content Include="Views\TaxApply\CorporateIncomeTax\SoftwareTable.cshtml" />
+    <Content Include="Views\TaxApply\CorporateIncomeTax\HighTechEnterprisesTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
