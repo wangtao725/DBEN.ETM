@@ -281,6 +281,10 @@
     <Content Include="Views\TaxApply\CorporateIncomeTax\TaxConcessionsTable.cshtml" />
     <Content Include="Views\TaxApply\CorporateIncomeTax\StatementTable.cshtml" />
     <Content Include="Views\TaxApply\CorporateIncomeTax\ReductionTable.cshtml" />
+    <Content Include="Views\TaxApply\CorporateIncomeTax\FnancialAndInsuranceTable.cshtml" />
+    <Content Include="Views\TaxApply\CorporateIncomeTax\ComprehensiveUtilizationResourceTable.cshtml" />
+    <Content Include="Views\TaxApply\CorporateIncomeTax\ResidentEnterprisesDividendsTable.cshtml" />
+    <Content Include="Views\TaxApply\CorporateIncomeTax\DetailedDownsTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
