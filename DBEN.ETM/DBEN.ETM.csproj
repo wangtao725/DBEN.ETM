@@ -285,6 +285,9 @@
     <Content Include="Views\TaxApply\CorporateIncomeTax\ComprehensiveUtilizationResourceTable.cshtml" />
     <Content Include="Views\TaxApply\CorporateIncomeTax\ResidentEnterprisesDividendsTable.cshtml" />
     <Content Include="Views\TaxApply\CorporateIncomeTax\DetailedDownsTable.cshtml" />
+    <Content Include="Views\TaxApply\CorporateIncomeTax\CoverDeficitTable.cshtml" />
+    <Content Include="Views\TaxApply\CorporateIncomeTax\SpecialIndustryReserveTable.cshtml" />
+    <Content Include="Views\TaxApply\CorporateIncomeTax\PolicyDetailTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
